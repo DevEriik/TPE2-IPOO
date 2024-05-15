@@ -134,26 +134,47 @@ do {
                                 case '3':
                                     $randomAsiento = random_int(1, 1000);
                                     $randomTicket = random_int(1, 1000);
-                                    $nombrePasajero = readline("Ingrese el nombre del pasajero: \n");
-                                    $apellidoPasajero = readline("Ingrese el apellido del pasajero: \n");
-                                    $tipoIdentidad = readline("Ingrese el tipo de identidad del pasajero: \n");
-                                    $dniPasajero = readline("Ingrese el DNI del pasajero: \n");
-                                    $requiereSillaDeRueda = (bool)rand(0, 1); //*EN ESTE CASO DEJE QUE SE ELIJA RANDOM PARA MAS RAPIDEZ A LA HORA DE PROGRAMAR, PERO PODRIA HACER QUE EL USUARIO ELIJA POR SI MISMO.
-                                    $requiereAsistEmbarque = (bool)rand(0, 1); //*EN ESTE CASO DEJE QUE SE ELIJA RANDOM PARA MAS RAPIDEZ A LA HORA DE PROGRAMAR, PERO PODRIA HACER QUE EL USUARIO ELIJA POR SI MISMO.
-                                    $requiereComidaEsp = (bool)rand(0, 1); //*EN ESTE CASO DEJE QUE SE ELIJA RANDOM PARA MAS RAPIDEZ A LA HORA DE PROGRAMAR, PERO PODRIA HACER QUE EL USUARIO ELIJA POR SI MISMO.
-                                        if ($objViaje->verificarPasajero($dniPasajero) == false) {
-
-                                            $objNuevoPasajeroNecesEsp = new PasajeroNecesidadesEsp($nombrePasajero, $apellidoPasajero, $tipoIdentidad, $dniPasajero, $randomAsiento, $randomTicket, $requiereSillaDeRueda, $requiereAsistEmbarque, $requiereComidaEsp);
-                                            $objViaje->setNewPasajero($objNuevoPasajeroNecesEsp);
-                                            echo "\n\n\n---------------------------------------------\n";
-                                            echo "EL PASAJERO SE CARGO CON EXITO";
-                                            echo "\n---------------------------------------------\n\n\n";
-                                            
-                                        }else {
-                                            echo "\n\n\n---------------------------------------------\n";
-                                            echo "El pasajero ya tiene un viaje activo";
-                                            echo "\n---------------------------------------------\n\n\n";
+                                    $nombrePasajero = readline("Ingrese el nombre del pasajero: ");
+                                    $apellidoPasajero = readline("Ingrese el apellido del pasajero: ");
+                                    $tipoIdentidad = readline("Ingrese el tipo de identidad del pasajero: ");
+                                    $dniPasajero = readline("Ingrese el DNI del pasajero: ");
+                                    $requiereSillaDeRueda = strtolower(readline("Ingrese si requiere silla de rueda (Si/No): \n")); 
+                                    $requiereAsistEmbarque = strtolower(readline("Ingrese si requiere asistencia de embarque (Si/No): \n")); 
+                                    $requiereComidaEsp = strtolower(readline("Ingrese si requiere comida especial (Si/No): \n")); 
+                                    /**
+                                     * *Aca paso los si/no a true o false. 
+                                     */
+                                        if ($requiereSillaDeRueda == "si") {
+                                            $requiereSillaDeRueda = true;
+                                        }elseif ($requiereSillaDeRueda == "no") {
+                                            $requiereSillaDeRueda = false;
                                         }
+
+                                        if ($requiereAsistEmbarque == "si") {
+                                            $requiereAsistEmbarque = true;
+                                        }elseif ($requiereAsistEmbarque == "no") {
+                                            $requiereAsistEmbarque = false;
+                                        }
+
+                                        if ($requiereComidaEsp == "si") {
+                                            $requiereComidaEsp = true;
+                                        }elseif ($requiereComidaEsp == "no") {
+                                            $requiereComidaEsp = false;
+                                        }
+
+                                            if ($objViaje->verificarPasajero($dniPasajero) == false) {
+
+                                                $objNuevoPasajeroNecesEsp = new PasajeroNecesidadesEsp($nombrePasajero, $apellidoPasajero, $tipoIdentidad, $dniPasajero, $randomAsiento, $randomTicket, $requiereSillaDeRueda, $requiereAsistEmbarque, $requiereComidaEsp);
+                                                $objViaje->setNewPasajero($objNuevoPasajeroNecesEsp);
+                                                echo "\n\n\n---------------------------------------------\n";
+                                                echo "EL PASAJERO SE CARGO CON EXITO";
+                                                echo "\n---------------------------------------------\n\n\n";
+                                                
+                                            }else {
+                                                echo "\n\n\n---------------------------------------------\n";
+                                                echo "El pasajero ya tiene un viaje activo";
+                                                echo "\n---------------------------------------------\n\n\n";
+                                            }
                                     break;
                                 case '4':
                                     echo "\n\n\n---------------------------------------------\n";
@@ -188,4 +209,3 @@ do {
                 
         }
 } while ($opcion != 5);
-//!FALTA ARROJAR LOS PRECIOS!
